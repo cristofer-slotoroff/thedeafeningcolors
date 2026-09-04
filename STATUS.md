@@ -56,7 +56,7 @@ _Updated 2026-09-04. Static site, no dependencies. `node build.mjs` writes `dist
 
 ## Priority queue
 
-1. Cris: cancel the Premium plan auto-renew (Account > Premium Subscriptions, dots on the Premium plan row). Keep the Domain row.
+1. Cris cancelled the Wix Core plan on 2026-09-04; premium features end March 28, 2027. Wix said the domain will "disconnect from your site" then. INFERRED, not verified: our custom A and CNAME records survive because they live on the separate Domain subscription (paid to April 2029). Re-verify with `dig @ns6.wixdns.net thedeafeningcolors.com A` in early March 2027; if unsure, move DNS to Netlify DNS or transfer the registrar before the 28th.
 2. Replace the placeholder hero copy when the new record has a name and date.
 3. Wire a newsletter sender (Buttondown or Mailchimp) when there is something to send.
 4. Banked ideas: GoatCounter analytics, a release-day landing page for the new record, Bandcamp "follow" count on the home page.
