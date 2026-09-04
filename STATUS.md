@@ -60,3 +60,39 @@ _Updated 2026-09-04. Static site, no dependencies. `node build.mjs` writes `dist
 2. Replace the placeholder hero copy when the new record has a name and date.
 3. Wire a newsletter sender (Buttondown or Mailchimp) when there is something to send.
 4. Banked ideas: GoatCounter analytics, a release-day landing page for the new record, Bandcamp "follow" count on the home page.
+
+## Session log
+
+### 2026-09-04: rebuilt off Wix, launched on Netlify, domain cut over
+
+**Work completed**
+
+- Pulled every page of the old Wix site and the Bandcamp catalog (album ids, tracklists, credits, art) into `data.mjs`, `news/*.md`, and `img/`. Band copy reproduced verbatim.
+- Wrote the static build (`build.mjs`, `css/style.css`): 18 pages, Bandcamp players per release, Netlify mailing-list form, old Wix URL redirects, RSS, sitemap, JSON-LD.
+- Created Netlify project `thedeafeningcolors`, deployed, attached the custom domain and www alias, forced HTTPS, turned on form detection, added the email hook.
+- Cris switched the DNS records at Wix by hand. Certificate issued, apex and www verified, old post links verified redirecting.
+- Checked Wix Contacts: nothing real to export. Cris cancelled the Wix Core plan (ends March 28, 2027).
+- Title Case rule clarified by Cris: every word capitalized. Saved to memory and applied site-wide.
+
+**Where it falls in the plan**
+
+- The de-Wix is done. The site is the band's home again, editable from this folder. The next milestone is the new record: hero copy, featured release, and a news post on release day.
+
+**Roadblocks**
+
+- The browser-automation classifier blocked editing DNS records in Wix, so Cris did that step. His first pass put the IP in the Host name box, which left the bare domain with no A record for a few minutes; caught by checking Wix's nameservers directly and fixed on the second pass.
+- This Mac's DNS cache held the empty answer for a while, so verification used `--resolve` and Cloudflare and Google resolvers instead.
+- The Free Music Archive refused image downloads without a browser referer; solved with headers.
+- The folder inherits a stray Netlify link to `sjta-shuttle`; every deploy passes `--site`.
+
+**Successes and new understanding**
+
+- Gmail never ran through Wix; nothing to detach. The domain registration and the Premium plan are separate Wix subscriptions, which is what made the record-only cut-over possible.
+- Bandcamp album ids are in each album page's `bc-page-properties` meta tag; the embedded player takes them directly.
+- The domain's MX rows still point at old GoDaddy mail servers; harmless, left alone.
+
+**Pick up next session**
+
+1. When the new record has a name and date: edit `announcement` and add the release in `data.mjs`, drop the cover in `img/covers/`, set `featuredRelease`, write a news post, build, deploy with `--prod --site 8ebea7d9-849d-47fb-838b-20e847077337`.
+2. Early March 2027: re-verify DNS at Wix (see cut-over plan step 1) before the Wix plan ends on the 28th.
+3. Banked: newsletter sender, GoatCounter analytics, Bandcamp follow count on the home page.
