@@ -1,0 +1,75 @@
+[build]
+  command = "node build.mjs"
+  publish = "dist"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+# Old Wix URLs (site lived on Wix 2015-2026). Keep these so old links and search results still land.
+[[redirects]]
+  from = "/social"
+  to = "/news/"
+  status = 301
+
+[[redirects]]
+  from = "/social/*"
+  to = "/news/"
+  status = 301
+
+[[redirects]]
+  from = "/single-post/*"
+  to = "/news/:splat/"
+  status = 301
+
+[[redirects]]
+  from = "/blog-feed.xml"
+  to = "/feed.xml"
+  status = 301
+
+[[redirects]]
+  from = "/store"
+  to = "/music/"
+  status = 301
+
+[[redirects]]
+  from = "/shop"
+  to = "/music/"
+  status = 301
+
+[[redirects]]
+  from = "/music"
+  to = "/music/"
+  status = 301
+
+[[redirects]]
+  from = "/shows"
+  to = "/shows/"
+  status = 301
+
+[[redirects]]
+  from = "/press"
+  to = "/press/"
+  status = 301
+
+[[redirects]]
+  from = "/video"
+  to = "/video/"
+  status = 301
+
+[[redirects]]
+  from = "/about"
+  to = "/about/"
+  status = 301
+
+[[redirects]]
+  from = "/contact"
+  to = "/contact/"
+  status = 301
