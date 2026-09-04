@@ -39,11 +39,11 @@ export const iconRow = [
 // Home page hero. PLACEHOLDER COPY (2026-09-04): Cris to confirm wording once the new release has a name and date.
 export const announcement = {
   eyebrow: 'New Music',
-  title: 'New Music Is on the Way',
+  title: 'New Music Is On The Way',
   body:
     'The Deafening Colors are back in the studio. The next record is coming, and Bandcamp followers hear it first.',
-  primary: { label: 'Follow on Bandcamp', href: links.bandcamp },
-  secondary: { label: 'Join the Mailing List', href: '/contact/#list' },
+  primary: { label: 'Follow On Bandcamp', href: links.bandcamp },
+  secondary: { label: 'Join The Mailing List', href: '/contact/#list' },
 };
 
 // Slug of the release featured on the home page as "Latest Release".
@@ -79,7 +79,7 @@ export const releases = [
   },
   {
     slug: 'live-at-wfmu',
-    title: 'Live at WFMU EP',
+    title: 'Live At WFMU EP',
     kind: 'Live EP',
     date: '2016-02-22',
     year: 2016,

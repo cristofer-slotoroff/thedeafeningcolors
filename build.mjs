@@ -13,6 +13,9 @@ const BUILD_DATE = new Date().toISOString().slice(0, 10);
 // ---------- helpers ----------
 const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
+// Title Case, Cris's rule (2026-09-04): every word capitalized, articles and prepositions included.
+const tc = (s) => String(s).replace(/(^|[\s(\u00a0/-])([a-z])/g, (m, pre, ch) => pre + ch.toUpperCase());
+
 // No orphans: join the last three words of a block with non-breaking spaces, skipping anything inside tags.
 function nw(html) {
   const parts = String(html).split(/(<[^>]+>)/);
@@ -138,7 +141,7 @@ function shell({ title, description, path: p, body, og, jsonld, bodyClass = '' }
 ${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld)}</script>` : ''}
 </head>
 <body class="${bodyClass}">
-<a class="skip" href="#main">Skip to Content</a>
+<a class="skip" href="#main">Skip To Content</a>
 <header class="site-head">
   <a class="wordmark" href="/">The Deafening Colors</a>
   <nav class="site-nav" aria-label="Site">
@@ -177,8 +180,8 @@ const bandJsonLd = {
 // ---------- shared blocks ----------
 function listenButtons(rel, { primaryLabel } = {}) {
   const out = [];
-  if (rel.bandcamp) out.push(`<a class="btn btn-primary" href="${rel.bandcamp.url}" rel="noopener">${icons.bandcamp} ${primaryLabel || 'Buy or Stream on Bandcamp'}</a>`);
-  if (rel.fma) out.push(`<a class="btn btn-primary" href="${rel.fma}" rel="noopener">Free Download on the Free Music Archive</a>`);
+  if (rel.bandcamp) out.push(`<a class="btn btn-primary" href="${rel.bandcamp.url}" rel="noopener">${icons.bandcamp} ${primaryLabel || 'Buy Or Stream On Bandcamp'}</a>`);
+  if (rel.fma) out.push(`<a class="btn btn-primary" href="${rel.fma}" rel="noopener">Free Download On The Free Music Archive</a>`);
   if (rel.spotify) out.push(`<a class="btn" href="${rel.spotify}" rel="noopener">${icons.spotify} Spotify</a>`);
   if (rel.apple) out.push(`<a class="btn" href="${rel.apple}" rel="noopener">${icons.applemusic} Apple Music</a>`);
   if (rel.soundcloud) out.push(`<a class="btn" href="${rel.soundcloud}" rel="noopener">${icons.soundcloud} SoundCloud</a>`);
@@ -220,7 +223,7 @@ function mailingListForm(id = 'list') {
 }
 
 function section(title, inner, { cls = '', id = '' } = {}) {
-  return `<section class="section ${cls}"${id ? ` id="${id}"` : ''}>${title ? `<h2 class="section-title">${nw(esc(title))}</h2>` : ''}${inner}</section>`;
+  return `<section class="section ${cls}"${id ? ` id="${id}"` : ''}>${title ? `<h2 class="section-title">${nw(esc(tc(title)))}</h2>` : ''}${inner}</section>`;
 }
 
 // ---------- pages ----------
@@ -260,14 +263,14 @@ function homePage() {
 </div>`);
 
   const disco = section('Records', `<div class="tile-row cover-grid">${releases.map((r) => `<a class="cover-tile" href="/music/#${r.slug}"><img src="${r.cover}" alt="${esc(r.title)} cover art" width="800" height="800" loading="lazy"><span class="cover-caption"><strong>${esc(r.title)}</strong><em>${r.year}</em></span></a>`).join('')}</div>
-<p class="more"><a href="/music/">All Releases, Tracklists, and Credits</a></p>`);
+<p class="more"><a href="/music/">All Releases, Tracklists, And Credits</a></p>`);
 
   const quote = `<section class="pull band-gold"><blockquote><p>&ldquo;${nw(esc(featuredQuote.text))}&rdquo;</p><footer>${esc(featuredQuote.who)}</footer></blockquote></section>`;
 
   const vid = section('Watch', `<div class="video-wrap"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/${videos[0].id}" title="${esc(videos[0].title)} ${esc(videos[0].sub)}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
 <p class="more"><a href="/video/">More Videos</a></p>`);
 
-  const list = section('Stay in the Loop', `<div class="card list-card"><p class="section-lede">${nw('New songs and show dates, straight to your inbox. Nothing else, ever.')}</p>${mailingListForm('list')}</div>`, { id: 'list' });
+  const list = section('Stay In The Loop', `<div class="card list-card"><p class="section-lede">${nw('New songs and show dates, straight to your inbox. Nothing else, ever.')}</p>${mailingListForm('list')}</div>`, { id: 'list' });
 
   return shell({ title: site.name, path: '/', body: hero + latest + listen + disco + quote + vid + list, jsonld: bandJsonLd, bodyClass: 'home' });
 }
@@ -298,7 +301,7 @@ function showsPage() {
   ${s.tickets ? `<a class="btn btn-primary" href="${s.tickets}" rel="noopener">Tickets</a>` : ''}
 </li>`;
   const body = `<header class="page-head"><h1>Shows</h1></header>
-${section('Upcoming', up.length ? `<ul class="show-list">${up.map(row).join('')}</ul>` : `<div class="card empty"><p>${nw('No dates on the calendar right now. Join the mailing list and you will hear about the next one first.')}</p><p><a class="btn btn-primary" href="/contact/#list">Join the Mailing List</a></p></div>`)}
+${section('Upcoming', up.length ? `<ul class="show-list">${up.map(row).join('')}</ul>` : `<div class="card empty"><p>${nw('No dates on the calendar right now. Join the mailing list and you will hear about the next one first.')}</p><p><a class="btn btn-primary" href="/contact/#list">Join The Mailing List</a></p></div>`)}
 ${section('Past Shows', `<ul class="show-list past">${past.map(row).join('')}</ul>
 <div class="tile-row poster-row">${past.filter((s) => s.poster).map((s) => `<figure class="poster"><img src="${s.poster}" alt="Poster for ${esc(s.venue)}, ${fmtShort(s.date)}" loading="lazy"><figcaption>${esc(s.venue)}, ${fmtShort(s.date)}</figcaption></figure>`).join('')}</div>`)}`;
   return shell({ title: 'Shows', description: 'Upcoming and past live shows by The Deafening Colors.', path: '/shows/', body });
@@ -381,7 +384,7 @@ function contactPage() {
 }
 
 function thanksPage() {
-  const body = `<header class="page-head"><h1>Thanks</h1><p class="lede">${nw('You are on the list. We will only write when there is a new song or a show.')}</p><p><a class="btn btn-primary" href="${links.bandcamp}" rel="noopener">${icons.bandcamp} Listen on Bandcamp</a> <a class="btn" href="/">Back Home</a></p></header>`;
+  const body = `<header class="page-head"><h1>Thanks</h1><p class="lede">${nw('You are on the list. We will only write when there is a new song or a show.')}</p><p><a class="btn btn-primary" href="${links.bandcamp}" rel="noopener">${icons.bandcamp} Listen On Bandcamp</a> <a class="btn" href="/">Back Home</a></p></header>`;
   return shell({ title: 'Thanks', description: 'Subscribed.', path: '/thanks/', body });
 }
 

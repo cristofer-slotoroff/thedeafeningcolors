@@ -4,9 +4,10 @@ _Updated 2026-09-04. Static site, no dependencies. `node build.mjs` writes `dist
 
 ## Where this stands (read first)
 
-**2026-09-04: site rebuilt off Wix, draft-deployed to Netlify for review. Not live on the domain yet.** The old Wix site (2015 to 2019 content, last post February 2019) is still what thedeafeningcolors.com serves.
+**2026-09-04: Cris approved the rebuild ("this looks amazing"). Production is deployed at https://thedeafeningcolors.netlify.app (verified 200). Custom domain thedeafeningcolors.com plus www alias are attached on the Netlify side. The DNS switch at Wix is the last step and Cris does it by hand: the browser-automation classifier blocked me from editing DNS records.** Until then the domain still serves the old Wix site.
 
-- Draft preview (verified 200 on 2026-09-04): https://6a9b123aece5062f34bdc637--thedeafeningcolors.netlify.app. The stable https://thedeafeningcolors.netlify.app URL fills in with the first `--prod` deploy. The domain still points at Wix.
+- Title Case rule clarified by Cris 2026-09-04: EVERY word capitalized ("New Music Is On The Way"). `tc()` in build.mjs does it for section titles; labels in data.mjs are written that way by hand. Old post titles stay verbatim.
+- Netlify Forms: detection on (`ignore_html_forms: false`), email hook `submission_created` to thedeafeningcolors@gmail.com (hook 6a9b19c4e3323175dc771fdc). Untested until the first real submission on the live domain.
 - Content pulled from the live Wix pages and Bandcamp on 2026-09-04: bio, credits, press quotes, video notes, and all ten blog posts are reproduced VERBATIM in `data.mjs` and `news/*.md`. Do not reword them; layout only.
 - PLACEHOLDER: home hero copy ("New Music Is on the Way" plus two sentences) is mine, not the band's. Cris to confirm or replace in `data.mjs` (`announcement`) once the new release has a name and date.
 - Bandcamp is home base by design (Cris: Bandcamp has far more plays than Spotify or Apple). Bandcamp is first in every icon row and button row, the home page embeds the Run Pass Option player, the Music page embeds a player per release, and the singles get track players.
@@ -34,13 +35,11 @@ _Updated 2026-09-04. Static site, no dependencies. `node build.mjs` writes `dist
 
 ## Cut-over plan (in order)
 
-1. Cris reviews the preview and signs off on the hero copy.
-2. Production deploy to the Netlify site (`--prod`).
-3. Point the domain at Netlify. Two options: (a) keep the domain registered at Wix and change the DNS records there to Netlify (fast, reversible), or (b) transfer the registration away from Wix (slower, needs the Wix unlock and auth code, keeps everything out of Wix). Recommend (a) first, (b) later.
-4. Add the custom domain to the Netlify site, wait for HTTPS.
-5. Export Wix contacts (the old mailing list) before the plan lapses.
-6. Cancel the Wix Premium plan auto-renew (next charge March 9, 2027). Cris only.
-7. Turn on Netlify form detection for the mailing-list form and add an email notification (as done on cristoferslotoroff.com).
+1. DONE 2026-09-04: sign-off, production deploy, custom domain attached on Netlify, forms on.
+2. Cris edits DNS at Wix (Account > Domains > ... > Manage DNS records). Wix DNS records as found on 2026-09-04: A @ 185.230.63.171 / .186 / .107 (three Wix IPs, TTL 1 hour); CNAME www -> Wix; CNAME calendar/email -> secureserver.net; MX -> secureserver.net. Change: A @ -> 75.2.60.5 (one record, delete the other two), CNAME www -> thedeafeningcolors.netlify.app. Leave MX and the secureserver CNAMEs alone.
+3. After propagation (TTL is 1 hour): verify with `dig`, then `netlify api provisionSiteTLSCertificate --data '{"site_id":"8ebea7d9-849d-47fb-838b-20e847077337"}'`, then confirm https://thedeafeningcolors.com serves the new site and www redirects.
+4. Export Wix contacts (the old mailing list) before the plan lapses. Cris (it is a download).
+5. Cancel the Wix Premium plan auto-renew (next charge March 9, 2027). Cris only. Keep the domain registration at Wix for now (paid through April 2029); transferring the registrar is a later, optional step.
 
 ## Deploy
 
@@ -57,7 +56,7 @@ _Updated 2026-09-04. Static site, no dependencies. `node build.mjs` writes `dist
 
 ## Priority queue
 
-1. Cris reviews the draft preview and confirms the hero copy.
-2. Production deploy, then DNS cut-over at Wix.
-3. Export Wix contacts, cancel the Wix plan renewal.
+1. Cris changes the three DNS records at Wix (see cut-over plan step 2), then I verify and provision HTTPS.
+2. Export Wix contacts, cancel the Wix plan renewal.
+3. Replace the placeholder hero copy when the new record has a name and date.
 4. Banked ideas: GoatCounter analytics, a release-day landing page for the new record, Bandcamp "follow" count on the home page.
