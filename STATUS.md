@@ -1,10 +1,10 @@
 # thedeafeningcolors.com: status
 
-_Updated 2026-09-04. Static site, no dependencies. `node build.mjs` writes `dist/`. Netlify project "thedeafeningcolors" (id 8ebea7d9-849d-47fb-838b-20e847077337), manual CLI deploys, NOT wired to git. Custom domain not yet attached (still on Wix)._
+_Updated 2026-09-04. Static site, no dependencies. `node build.mjs` writes `dist/`. Netlify project "thedeafeningcolors" (id 8ebea7d9-849d-47fb-838b-20e847077337), custom domain thedeafeningcolors.com (www redirects to apex), HTTPS forced, manual CLI deploys, NOT wired to git._
 
 ## Where this stands (read first)
 
-**2026-09-04: Cris approved the rebuild ("this looks amazing"). Production is deployed at https://thedeafeningcolors.netlify.app (verified 200). Custom domain thedeafeningcolors.com plus www alias are attached on the Netlify side. The DNS switch at Wix is the last step and Cris does it by hand: the browser-automation classifier blocked me from editing DNS records.** Until then the domain still serves the old Wix site.
+**LIVE at https://thedeafeningcolors.com since 2026-09-04 (Cris: "this looks amazing. let's go with it").** Cris edited the DNS records at Wix by hand (the browser-automation classifier blocked me from doing it). Verified the same day: Wix nameservers answer A 75.2.60.5 and www CNAME thedeafeningcolors.netlify.app, Let's Encrypt certificate issued for both names, http redirects to https, www redirects to the apex, old Wix post URLs 301 to /news/. Chrome loaded https://thedeafeningcolors.com/ and showed the new home page. The domain stays REGISTERED at Wix (paid through April 2029); only the records changed. MX and the secureserver CNAMEs were left alone.
 
 - Title Case rule clarified by Cris 2026-09-04: EVERY word capitalized ("New Music Is On The Way"). `tc()` in build.mjs does it for section titles; labels in data.mjs are written that way by hand. Old post titles stay verbatim.
 - Netlify Forms: detection on (`ignore_html_forms: false`), email hook `submission_created` to thedeafeningcolors@gmail.com (hook 6a9b19c4e3323175dc771fdc). Untested until the first real submission on the live domain.
@@ -36,8 +36,8 @@ _Updated 2026-09-04. Static site, no dependencies. `node build.mjs` writes `dist
 ## Cut-over plan (in order)
 
 1. DONE 2026-09-04: sign-off, production deploy, custom domain attached on Netlify, forms on.
-2. Cris edits DNS at Wix (Account > Domains > ... > Manage DNS records). Wix DNS records as found on 2026-09-04: A @ 185.230.63.171 / .186 / .107 (three Wix IPs, TTL 1 hour); CNAME www -> Wix; CNAME calendar/email -> secureserver.net; MX -> secureserver.net. Change: A @ -> 75.2.60.5 (one record, delete the other two), CNAME www -> thedeafeningcolors.netlify.app. Leave MX and the secureserver CNAMEs alone.
-3. After propagation (TTL is 1 hour): verify with `dig`, then `netlify api provisionSiteTLSCertificate --data '{"site_id":"8ebea7d9-849d-47fb-838b-20e847077337"}'`, then confirm https://thedeafeningcolors.com serves the new site and www redirects.
+2. DONE 2026-09-04 by Cris: DNS edited at Wix (Account > Domains > ... > Manage DNS records). First attempt put the IP in the Host name box, which left the apex with no A record for a few minutes; fixed on the second pass. Wix DNS records as found on 2026-09-04: A @ 185.230.63.171 / .186 / .107 (three Wix IPs, TTL 1 hour); CNAME www -> Wix; CNAME calendar/email -> secureserver.net; MX -> secureserver.net. Change: A @ -> 75.2.60.5 (one record, delete the other two), CNAME www -> thedeafeningcolors.netlify.app. Leave MX and the secureserver CNAMEs alone.
+3. DONE 2026-09-04: certificate provisioned via `netlify api provisionSiteTLSCertificate`, `force_ssl` set, apex and www verified.
 4. Export Wix contacts (the old mailing list) before the plan lapses. Cris (it is a download).
 5. Cancel the Wix Premium plan auto-renew (next charge March 9, 2027). Cris only. Keep the domain registration at Wix for now (paid through April 2029); transferring the registrar is a later, optional step.
 
@@ -56,7 +56,7 @@ _Updated 2026-09-04. Static site, no dependencies. `node build.mjs` writes `dist
 
 ## Priority queue
 
-1. Cris changes the three DNS records at Wix (see cut-over plan step 2), then I verify and provision HTTPS.
-2. Export Wix contacts, cancel the Wix plan renewal.
-3. Replace the placeholder hero copy when the new record has a name and date.
+1. Cris: export Wix contacts (Wix dashboard > Customers & Leads > Contacts > export) and cancel the Premium plan auto-renew (Account > Premium Subscriptions). Keep the domain subscription.
+2. Replace the placeholder hero copy when the new record has a name and date.
+3. First real mailing-list submission: confirm the email notification lands, then delete any test rows in Netlify Forms.
 4. Banked ideas: GoatCounter analytics, a release-day landing page for the new record, Bandcamp "follow" count on the home page.
