@@ -7,7 +7,7 @@ _Updated 2026-09-04. Static site, no dependencies. `node build.mjs` writes `dist
 **LIVE at https://thedeafeningcolors.com since 2026-09-04 (Cris: "this looks amazing. let's go with it").** Cris edited the DNS records at Wix by hand (the browser-automation classifier blocked me from doing it). Verified the same day: Wix nameservers answer A 75.2.60.5 and www CNAME thedeafeningcolors.netlify.app, Let's Encrypt certificate issued for both names, http redirects to https, www redirects to the apex, old Wix post URLs 301 to /news/. Chrome loaded https://thedeafeningcolors.com/ and showed the new home page. The domain stays REGISTERED at Wix (paid through April 2029); only the records changed. MX and the secureserver CNAMEs were left alone.
 
 - Title Case rule clarified by Cris 2026-09-04: EVERY word capitalized ("New Music Is On The Way"). `tc()` in build.mjs does it for section titles; labels in data.mjs are written that way by hand. Old post titles stay verbatim.
-- Netlify Forms: detection on (`ignore_html_forms: false`), email hook `submission_created` to thedeafeningcolors@gmail.com (hook 6a9b19c4e3323175dc771fdc). Untested until the first real submission on the live domain.
+- Mailing list = Netlify Forms, form `mailing-list` (name, email, honeypot). Verified 2026-09-04 on the live domain: form registered, a test POST landed as a submission, then deleted. Email hook `submission_created` to thedeafeningcolors@gmail.com (hook 6a9b19c4e3323175dc771fdc). Signups live at https://app.netlify.com/projects/thedeafeningcolors/forms (CSV export there). Free tier: 100 submissions a month. Sending a newsletter needs a sender tool (Buttondown or Mailchimp); banked.
 - Content pulled from the live Wix pages and Bandcamp on 2026-09-04: bio, credits, press quotes, video notes, and all ten blog posts are reproduced VERBATIM in `data.mjs` and `news/*.md`. Do not reword them; layout only.
 - PLACEHOLDER: home hero copy ("New Music Is on the Way" plus two sentences) is mine, not the band's. Cris to confirm or replace in `data.mjs` (`announcement`) once the new release has a name and date.
 - Bandcamp is home base by design (Cris: Bandcamp has far more plays than Spotify or Apple). Bandcamp is first in every icon row and button row, the home page embeds the Run Pass Option player, the Music page embeds a player per release, and the singles get track players.
@@ -58,5 +58,5 @@ _Updated 2026-09-04. Static site, no dependencies. `node build.mjs` writes `dist
 
 1. Cris: cancel the Premium plan auto-renew (Account > Premium Subscriptions, dots on the Premium plan row). Keep the Domain row.
 2. Replace the placeholder hero copy when the new record has a name and date.
-3. First real mailing-list submission: confirm the email notification lands, then delete any test rows in Netlify Forms.
+3. Wire a newsletter sender (Buttondown or Mailchimp) when there is something to send.
 4. Banked ideas: GoatCounter analytics, a release-day landing page for the new record, Bandcamp "follow" count on the home page.
