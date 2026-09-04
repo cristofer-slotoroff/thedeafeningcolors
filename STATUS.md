@@ -38,7 +38,7 @@ _Updated 2026-09-04. Static site, no dependencies. `node build.mjs` writes `dist
 1. DONE 2026-09-04: sign-off, production deploy, custom domain attached on Netlify, forms on.
 2. DONE 2026-09-04 by Cris: DNS edited at Wix (Account > Domains > ... > Manage DNS records). First attempt put the IP in the Host name box, which left the apex with no A record for a few minutes; fixed on the second pass. Wix DNS records as found on 2026-09-04: A @ 185.230.63.171 / .186 / .107 (three Wix IPs, TTL 1 hour); CNAME www -> Wix; CNAME calendar/email -> secureserver.net; MX -> secureserver.net. Change: A @ -> 75.2.60.5 (one record, delete the other two), CNAME www -> thedeafeningcolors.netlify.app. Leave MX and the secureserver CNAMEs alone.
 3. DONE 2026-09-04: certificate provisioned via `netlify api provisionSiteTLSCertificate`, `force_ssl` set, apex and www verified.
-4. Export Wix contacts (the old mailing list) before the plan lapses. Cris (it is a download).
+4. DONE 2026-09-04: checked Wix Contacts. 7 entries total: 2 Wix demo contacts, the band's own two accounts, 2 spam site-member signups from 2022, and 1 "subscribed" entry from 2024 with a malformed spam address. No real mailing list ever accumulated on Wix; nothing exported. The new list starts from zero on Netlify Forms.
 5. Cancel the Wix Premium plan auto-renew (next charge March 9, 2027). Cris only. Keep the domain registration at Wix for now (paid through April 2029); transferring the registrar is a later, optional step.
 
 ## Deploy
@@ -56,7 +56,7 @@ _Updated 2026-09-04. Static site, no dependencies. `node build.mjs` writes `dist
 
 ## Priority queue
 
-1. Cris: export Wix contacts (Wix dashboard > Customers & Leads > Contacts > export) and cancel the Premium plan auto-renew (Account > Premium Subscriptions). Keep the domain subscription.
+1. Cris: cancel the Premium plan auto-renew (Account > Premium Subscriptions, dots on the Premium plan row). Keep the Domain row.
 2. Replace the placeholder hero copy when the new record has a name and date.
 3. First real mailing-list submission: confirm the email notification lands, then delete any test rows in Netlify Forms.
 4. Banked ideas: GoatCounter analytics, a release-day landing page for the new record, Bandcamp "follow" count on the home page.
